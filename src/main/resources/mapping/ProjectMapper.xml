@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codegeneration.mapper.ProjectMapper">
+
+    <resultMap id="ProjectResultMap" type="com.codegeneration.model.Project">
+        <result column="project_id" jdbcType="INTEGER" property="projectId"/>
+        <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+        <result column="package_name" jdbcType="VARCHAR" property="packageName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+    </resultMap>
+
+
+    <select id="findByProjectId" resultMap="ProjectResultMap">
+        SELECT *
+        FROM tb_project
+        WHERE project_id = #{projectId}
+        LIMIT 1
+    </select>
+
+    <select id="paging" resultMap="ProjectResultMap" parameterType="com.codegeneration.utils.Pagination">
+        SELECT *
+        FROM tb_project
+        <where>
+            <if test="query != null and query.projectNameLike != null and query.projectNameLike != ''">
+                AND project_name LIKE concat('%', #{query.projectNameLike}, '%')
+            </if>
+        </where>
+        ORDER BY project_id DESC
+        LIMIT #{start}, #{limit}
+    </select>
+    <select id="total" resultType="java.lang.Integer" parameterType="com.codegeneration.utils.Pagination">
+        SELECT COUNT(0)
+        FROM tb_project
+        <where>
+            <if test="query != null and query.projectNameLike != null and query.projectNameLike != ''">
+                AND project_name LIKE concat('%', #{query.projectNameLike}, '%')
+            </if>
+        </where>
+    </select>
+    <insert id="insert" parameterType="com.codegeneration.model.Project" useGeneratedKeys="true" keyProperty="projectId">
+        INSERT INTO tb_project(project_name, package_name, create_time, last_update_time)
+        VALUES (#{projectName}, #{packageName}, #{createTime}, #{lastUpdateTime});
+    </insert>
+
+
+    <update id="update" parameterType="com.codegeneration.model.Project">
+        UPDATE tb_project
+        SET project_name = #{projectName},
+            package_name = #{packageName},
+            last_update_time = #{lastUpdateTime}
+        WHERE project_id = #{projectId}
+    </update>
+
+</mapper>

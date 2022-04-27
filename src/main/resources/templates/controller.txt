@@ -1,0 +1,42 @@
+package [(${packageName})].controller;
+import [(${packageName})].model.[(${modelName})];
+import [(${packageName})].service.[(${modelName})]Service;
+import [(${packageName})].utils.Result;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/u/${firstLetterLowercaseModelName}")
+@Slf4j
+public class [(${modelName})]Controller {
+
+    @Autowired
+    private [(${modelName})]Service ${firstLetterLowercaseModelName}Service;
+
+    @PostMapping("/insert")
+    Result<[(${modelName})]> insert(@RequestBody [(${modelName})] [(${firstLetterLowercaseModelName})]) {
+        return [(${firstLetterLowercaseModelName})]Service.insert([(${firstLetterLowercaseModelName})]);
+    }
+
+    @PutMapping("/updateNotNullFields")
+    Result<[(${modelName})]> updateNotNullFields(@RequestBody [(${modelName})] [(${firstLetterLowercaseModelName})]) {
+        return [(${firstLetterLowercaseModelName})]Service.updateNotNullFields([(${firstLetterLowercaseModelName})]);
+    }
+
+    @PutMapping("/updateAllFields")
+    Result<[(${modelName})]> updateAllFields(@RequestBody [(${modelName})] [(${firstLetterLowercaseModelName})]) {
+        return [(${firstLetterLowercaseModelName})]Service.updateAllFields([(${firstLetterLowercaseModelName})]);
+    }
+
+    @PostMapping("/list")
+    Result<List<[(${modelName})]>> list(@RequestBody [(${modelName})] [(${firstLetterLowercaseModelName})]) {
+        return [(${firstLetterLowercaseModelName})]Service.list([(${firstLetterLowercaseModelName})]);
+    }
+
+    @DeleteMapping("/delete")
+    Result<[(${modelName})]> update(@RequestBody [(${modelName})] [(${firstLetterLowercaseModelName})]) {
+        return [(${firstLetterLowercaseModelName})]Service.delete([(${firstLetterLowercaseModelName})]);
+    }
+
+}

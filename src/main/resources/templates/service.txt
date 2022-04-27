@@ -1,0 +1,65 @@
+
+
+package [(${packageName})].service;
+import [(${packageName})].model.[(${modelName})];
+import [(${packageName})].service.[(${modelName})]Service;
+import [(${packageName})].utils.Result;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Date;
+
+@Service
+@Transactional
+public class [(${modelName})]Service {
+
+
+    @Autowired
+    private [(${modelName})]Mapper [(${firstLetterLowercaseModelName})]Mapper;
+
+
+    Result<[(${modelName})]> insert([(${modelName})] [(${firstLetterLowercaseModelName})]) {
+
+        // TODO 根据字段进行校验
+        // 这里只负责插入, id 是自增还是赋值, 是否成功需要由调用者判断
+
+        ${firstLetterLowercaseModelName}Mapper.insert([(${firstLetterLowercaseModelName})]);
+
+        return new Result(true, "", [(${firstLetterLowercaseModelName})]);
+    }
+
+
+    Result<[(${modelName})]> updateNotNullFields([(${modelName})] [(${firstLetterLowercaseModelName})]) {
+
+        // TODO 校验数据库字段
+
+        // 调用 update
+        [(${firstLetterLowercaseModelName})]Mapper.updateNotNullFields([(${firstLetterLowercaseModelName})]);
+
+
+        return new Result(true, "", ${firstLetterLowercaseModelName});
+    }
+
+
+    Result<[(${modelName})]> updateAllFields([(${modelName})] [(${firstLetterLowercaseModelName})]) {
+        // TODO 校验数据库字段
+
+        // 调用 update
+        [(${firstLetterLowercaseModelName})]Mapper.updateAllFields([(${firstLetterLowercaseModelName})]);
+
+
+        return new Result(true, "", ${firstLetterLowercaseModelName});
+    }
+
+    Result<List<[(${modelName})]>> list([(${modelName})] [(${firstLetterLowercaseModelName})]) {
+
+        List<[(${modelName})]> [(${modelName})]List = [(${firstLetterLowercaseModelName})]Mapper.list([(${firstLetterLowercaseModelName})]);
+        return new Result(true, "", [(${modelName})]List);
+    }
+
+    Result<[(${modelName})]> delete([(${modelName})] [(${firstLetterLowercaseModelName})]) {
+        List<[(${modelName})]> [(${firstLetterLowercaseModelName})]List = [(${firstLetterLowercaseModelName})]Mapper.list([(${firstLetterLowercaseModelName})]);
+        return new Result(true, "", [(${modelName})]List);
+    }
+
+}

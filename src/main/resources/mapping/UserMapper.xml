@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codegeneration.mapper.UserMapper">
+
+    <resultMap id="UserResultMap" type="com.codegeneration.model.User">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="create_time" jdbcType="TIMESTAMP"
+                property="createTime"/>
+    </resultMap>
+
+    <select id="findById" resultMap="UserResultMap">
+        select *
+        from tb_user
+        where id = #{id}
+        limit 1
+    </select>
+
+    <select id="findByEmail" resultMap="UserResultMap">
+        select *
+        from tb_user
+        where email = #{email}
+        limit 1
+    </select>
+
+    <insert id="insert" parameterType="com.codegeneration.model.User"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tb_user(username, email, password, type, create_time)
+        VALUES (#{username}, #{email}, #{password}, #{type}, #{createTime});
+    </insert>
+
+    <select id="getRegisteredStudentNum" resultType="java.lang.Integer">
+
+        SELECT COUNT(0) AS "registeredStudentNum"
+        FROM tb_user
+        WHERE `type` = 'STUDENT'
+
+    </select>
+
+    <update id="update" parameterType="com.codegeneration.model.User">
+        UPDATE tb_user
+        SET username = #{username},
+            password = #{password}
+        WHERE email = #{email}
+    </update>
+
+</mapper>
